@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
-function App() {
+import HomePage from "./components/Home";
+import AboutPage from "./components/About";
+import NotFoundPage from "./components/NotFound";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <BrowserRouter>
+        <div>
+          <Link to="/homepage">Home</Link>
+          <Link
+            to={{
+              pathname: "/about",
+              state: {
+                from: "root",
+                thePersonLoginName: "johndoe123",
+                randomData: "transferedUsingRR.state",
+              },
+            }}
+          >
+            About
+          </Link>
+        </div>
+
+        <Switch>
+          <Route path="/homepage" exact component={HomePage} />
+          <Route path="/homepage/:name" exact component={HomePage} />
+          <Route path="/about" exact component={AboutPage} />
+          <Route path="*" exact component={NotFoundPage} />
+        </Switch>
+      </BrowserRouter>
+    </Fragment>
   );
-}
+};
 
 export default App;
